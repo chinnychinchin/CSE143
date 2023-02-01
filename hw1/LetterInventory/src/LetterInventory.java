@@ -82,4 +82,40 @@ public class LetterInventory {
    charCount[displacement] = value;
    size += difference;
   }
+  
+  public LetterInventory add(LetterInventory other) {
+   // Create a new LetterInventory object first
+   LetterInventory newLetterInventory = new LetterInventory("");
+   int newSize = this.size + other.size;
+   // set the newLetterInventory size attribute 
+   newLetterInventory.size = newSize;
+   int[] newCharCount = new int[NUMBER_OF_LETTERS];
+   for (int i = 0; i < NUMBER_OF_LETTERS; i++) {
+      newCharCount[i] = charCount[i] + other.charCount[i];
+   }
+   // set the newLetterInventory charCount attribute
+   newLetterInventory.charCount = newCharCount;
+   
+   return newLetterInventory;
+  }
+  
+  public LetterInventory subtract(LetterInventory other) {
+  
+   int newSize = this.size - other.size;
+   if (newSize < 0) return null;
+   int[] newCharCount = new int[NUMBER_OF_LETTERS];
+   for (int i = 0; i < NUMBER_OF_LETTERS; i++) {
+      newCharCount[i] = charCount[i] - other.charCount[i];
+      if (newCharCount[i] < 0) return null;
+   }
+   
+   LetterInventory newLetterInventory = new LetterInventory("");
+   // set the newLetterInventory size attribute 
+   newLetterInventory.size = newSize;
+   // set the newLetterInventory charCount attribute
+   newLetterInventory.charCount = newCharCount;
+   return newLetterInventory;
+  
+  }
+  
 }

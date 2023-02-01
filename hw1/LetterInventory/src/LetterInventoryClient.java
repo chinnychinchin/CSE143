@@ -14,6 +14,10 @@ public class LetterInventoryClient {
           li.set('b',0);
           System.out.println("li = " + li);
           System.out.println("size = " + li.size());
+          LetterInventory li2 = new LetterInventory("+++bz123");
+          LetterInventory li3 = li.add(li2);
+          System.out.println("li3 = " + li3);
+          
      }
 
 }
