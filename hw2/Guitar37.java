@@ -1,5 +1,3 @@
-// skeleton version of the class
-
 public class Guitar37 implements Guitar {
     public static final String KEYBOARD =
        "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";  // keyboard layout
@@ -10,6 +8,7 @@ public class Guitar37 implements Guitar {
     public Guitar37() {
 
         numOfTimesTicCalled = 0;
+        strings = new GuitarString[KEYBOARD.length()];
         // initialise strings array
         for (int i = 0; i < KEYBOARD.length(); i++) {
             strings[i] = new GuitarString(440 * Math.pow(2, (i - 24)/12.0));
@@ -57,9 +56,7 @@ public class Guitar37 implements Guitar {
         numOfTimesTicCalled++;
     }
     public int time() {
-        if (numOfTimesTicCalled == 0) {
-            return -1;
-        }
+    
         return numOfTimesTicCalled;
     }
  
