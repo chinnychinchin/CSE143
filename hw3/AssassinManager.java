@@ -46,6 +46,7 @@ public class AssassinManager {
    
    public void printGraveyard() {
       
+      if (frontGraveyard == null) System.out.print("");
       
    
    }
@@ -97,7 +98,34 @@ public class AssassinManager {
       if (!killRingContains(name)) throw new IllegalArgumentException();
       else if (gameOver()) throw new IllegalStateException();
       
+      AssassinNode current = frontKillRing;
+      AssassinNode personKilled = null;
+      AssassinNode killer = null;
       
+      while (current.name != name) {
+      
+         killer = current;
+         current = current.next;
+      }
+      
+      personKilled = current;
+      
+      // this scenario happens if the person killed is the first in the killRing
+      if (killer == null) {
+      
+         while (killer == null) {
+            current = current.next;
+            if (current.next == null) killer = current;
+         }
+         
+         frontKillRing = personKilled.next;
+      }
+      
+      else killer.next = personKilled.next;
+      
+      personKilled.killer = killer.name;
+      
+      // code to move personKilled to graveYard;
    
    }
    
