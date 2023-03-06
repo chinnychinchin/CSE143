@@ -48,6 +48,16 @@ public class AssassinManager {
       
       if (frontGraveyard == null) System.out.print("");
       
+      else {
+      
+         AssassinNode current = frontGraveyard;
+         while (current != null) {
+            
+            System.out.println("    " + current.name + " was killed by " + current.killer);
+            current = current.next;
+         }
+         
+      }
    
    }
    
@@ -57,7 +67,7 @@ public class AssassinManager {
       AssassinNode current = frontKillRing;
       while (current != null) {
       
-         if (current.name.toLowerCase() == name.toLowerCase()) return true;
+         if (current.name.equalsIgnoreCase(name)) return true;
          current = current.next;
       }
       
@@ -71,7 +81,7 @@ public class AssassinManager {
       AssassinNode current = frontGraveyard;
       while (current != null) {
       
-         if (current.name.toLowerCase() == name.toLowerCase()) return true;
+         if (current.name.equalsIgnoreCase(name)) return true;
          current = current.next;
       }
       
@@ -102,7 +112,7 @@ public class AssassinManager {
       AssassinNode personKilled = null;
       AssassinNode killer = null;
       
-      while (current.name != name) {
+      while (current != null && !current.name.equalsIgnoreCase(name)) {
       
          killer = current;
          current = current.next;
@@ -124,11 +134,21 @@ public class AssassinManager {
       else killer.next = personKilled.next;
       
       personKilled.killer = killer.name;
+      personKilled.next = null;
       
-      // code to move personKilled to graveYard;
-   
+      // code to prepend personKilled to graveYard, 
+      //i.e. person most recently killed should be first in the list
+      prependToGraveyard(personKilled);
+    
+       
    }
    
+   private void prependToGraveyard(AssassinNode personKilled) {
+      
+      AssassinNode temp = frontGraveyard;
+      frontGraveyard = personKilled;
+      frontGraveyard.next = temp;
+   }
    
    
 }
