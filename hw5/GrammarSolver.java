@@ -43,35 +43,45 @@ public class GrammarSolver {
          throw new IllegalArgumentException();
       }
       
-      return generatePri(symbol, times);
+      String[] stringArrayToReturn = new String[times];
       
+      for (int i = 0; i < times; i++) {
+         
+         stringArrayToReturn[i] = generateTerminal(symbol);
+                  
+      }
+      
+      return stringArrayToReturn;
       
    }
    
-   // For each time, select a random rule
-   // check if rule is terminal
-   // if it is, add a random terminal to the String[] to be returned   
+   // check to see if the rulePart is terminal
+   // if it is, return a random terminal from the rulePart
+   // else,  
    
-   private String[] generatePri(String symbol, int times) {
+   private String generateTerminal(String symbol) {
    
-      String[] arrayToReturn = new String[times];
-      String[] rules = theGrammarMap.get(symbol).split("[|]"); 
-      for (int i = 0; i < times; i++) {
       
-         String randomRule = rules[randomObj.nextInt(rules.length)];
-         // if block is for the case when rule is a terminal. This is the base case 
-         if (!grammarContains(randomRule)) {
-         
-            arrayToReturn[i] = rules[randomObj.nextInt(rules.length)];
-         }
-         else {
-         
-            arrayToReturn = generatePri(randomRule, 1);
-         }    
-      
-      }
-    return arrayToReturn;
+      String[] rules = theGrammarMap.get(symbol).split("[|]");
+      String randomRule = rules[randomObj.nextInt(rules.length)];
+      String[] ruleParts = randomRule.split("[ \t]+");
 
+      
+      if (!grammarContains(ruleParts[0])) {
+         
+         return ruleParts[0];
+      }
+      else {
+         
+         String tempS = generateTerminal(ruleParts[0]);
+         for (int k = 1; k < ruleParts.length; k++) {
+         
+            tempS = tempS + " " + generateTerminal(ruleParts[k]);
+         
+         }
+         return tempS;
+      }
+          
    }
    
  
