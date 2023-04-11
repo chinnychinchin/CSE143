@@ -54,34 +54,34 @@ public class GrammarSolver {
       return stringArrayToReturn;
       
    }
-   
-   // check to see if the rulePart is terminal
-   // if it is, return a random terminal from the rulePart
-   // else,  
-   
+
+
    private String generateTerminal(String symbol) {
    
       
       String[] rules = theGrammarMap.get(symbol).split("[|]");
-      String randomRule = rules[randomObj.nextInt(rules.length)];
-      String[] ruleParts = randomRule.split("[ \t]+");
-
+      String randomRule = rules[randomObj.nextInt(rules.length)].trim();
+      String[] tokens = randomRule.split("[ \t]+");
+      String stringToReturn = "";
       
-      if (!grammarContains(ruleParts[0])) {
-         
-         return ruleParts[0];
-      }
-      else {
-         
-         String tempS = generateTerminal(ruleParts[0]);
-         for (int k = 1; k < ruleParts.length; k++) {
-         
-            tempS = tempS + " " + generateTerminal(ruleParts[k]);
-         
+      for (String token : tokens) {
+      
+         if (!grammarContains(token)) {
+            
+            stringToReturn += " " + token;
          }
-         return tempS;
+         
+         else {
+      
+            stringToReturn += " " + generateTerminal(token);
+            
+         }
+
+         
       }
-          
+      
+      return stringToReturn.trim();
+      
    }
    
  
